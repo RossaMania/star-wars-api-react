@@ -20,10 +20,10 @@ function App() {
   // ];
 const [movies, setMovies] = useState([]);
 
-  function fetchMovies() {
-    fetch('https://swapi.dev/api/films').then((response) => {
-      return response.json();
-    }).then((data) => {
+  async function fetchMovies() {
+    const response = await fetch('https://swapi.dev/api/films');
+    const data = await response.json();
+
       const transformedMovies = data.results.map(movieData => {
         return {
           id: movieData.episode_id,
@@ -33,8 +33,8 @@ const [movies, setMovies] = useState([]);
         };
       });
       setMovies(transformedMovies);
-    });
-}
+    };
+
 
   return (
     <React.Fragment>
