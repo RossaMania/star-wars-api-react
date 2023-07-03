@@ -1,30 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import MoviesList from './components/MoviesList';
-import './App.css';
+import MoviesList from "./components/MoviesList";
+import "./App.css";
 
 function App() {
-
-const [movies, setMovies] = useState([]);
-const [isLoading, setIsLoading] = useState(false);
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   async function fetchMovies() {
     setIsLoading(true);
-    const response = await fetch('https://swapi.dev/api/films');
-    const data = await response.json();
+    setError(null);
+    try {
+      const response = await fetch("https://swapi.dev/api/films");
 
-      const transformedMovies = data.results.map(movieData => {
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const data = await response.json();
+
+      const transformedMovies = data.results.map((movieData) => {
         return {
           id: movieData.episode_id,
           title: movieData.title,
           openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date
+          releaseDate: movieData.release_date,
         };
       });
-      setMovies(transformedMovies);
-      setIsLoading(false)
-    };
 
+      setMovies(transformedMovies);
+    } catch (error) {
+      setError(error.message);
+    }
+    setIsLoading(false);
+  }
+
+  let content = <p>Oh dear! No movies found!</p>;
+
+  if (movies.length > 0) {
+    content = <MoviesList movies={movies} />
+  }
+
+  if (error) {
+    content = <p>{error}</p>
+  }
+
+  if (isLoading) {
+    content = <p>Beep boop. Loading... Boop...</p>
+  }
 
   return (
     <React.Fragment>
@@ -32,9 +56,7 @@ const [isLoading, setIsLoading] = useState(false);
         <button onClick={fetchMovies}>Fetch Movies</button>
       </section>
       <section>
-        {!isLoading && movies.length > 0 && <MoviesList movies={movies} />}
-        {!isLoading && movies.length === 0 && <p>Oh dear! Found no movies!</p>}
-        {isLoading && <p>Beep boop. Loading... Boop...</p>}
+        {content}
       </section>
     </React.Fragment>
   );
