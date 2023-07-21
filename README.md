@@ -1,3 +1,17 @@
+# star-wars-movie-fetcher
+
+This project, "star-wars-movie-fetcher," started out using the Star Wars API to fetch the title, release date, and opening crawl from the “Star Wars” original trilogy. It then evolved into using Firebase as a database, allowing users to input information about movies and fetch that information later.
+
+The starter code and project are part of the "React - The Complete Guide 2023 (incl. React Router & Redux)" course on Udemy, from Academind. This bestselling course has turned more than 700,000 students into ReactJS developers (more than any other React course on Udemy)!
+
+
+## Usage
+The "star-wars-movie-fetcher" allows you to do the following:
+- Input the text of a movie Title, a movie’s Opening Text, and a movie’s Release Date into the form.
+- Click the "Add Movie" button to save the movie information to the Google Firebase database.
+- Click the "Fetch Movie" button to retrieve the previously saved movie data from the database.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
